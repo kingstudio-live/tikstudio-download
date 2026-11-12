@@ -87,7 +87,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
 </style>
 <!--KS:CSS--><style>/* ===== KS KIT 2026 · โฉมใหม่: ตาราง · แถบเมนูแคปซูล · มืด/สว่าง · ไลฟ์สด ===== */
 :root{--ks-bg:#0a0713;--ks-tx:#f4f1ff;--ks-mu:#a39cbf;--ks-card:rgba(255,255,255,.045);--ks-card2:rgba(255,255,255,.08);--ks-line:rgba(255,255,255,.09);--ks-grid:rgba(255,255,255,.05);--ks-nav:rgba(18,14,30,.72);--ks-p1:#8b5cf6;--ks-p2:#a78bfa;--ks-p3:#c4b5fd;--ks-glow:rgba(139,92,246,.30);--ks-glow2:rgba(217,70,239,.16)}
-html[data-theme=light]{--ks-bg:#f7f6fc;--ks-tx:#1b1630;--ks-mu:#5f5a7a;--ks-card:#ffffff;--ks-card2:#f3f0fb;--ks-line:rgba(60,40,130,.12);--ks-grid:rgba(70,45,150,.075);--ks-nav:rgba(255,255,255,.82);--ks-glow:rgba(139,92,246,.16);--ks-glow2:rgba(217,70,239,.08);color-scheme:light}
+html[data-theme=light]{--ks-bg:#e8e5ef;--ks-tx:#1b1630;--ks-mu:#57526f;--ks-card:#f8f7fb;--ks-card2:#ece9f4;--ks-line:rgba(60,40,130,.12);--ks-grid:rgba(70,45,150,.075);--ks-nav:rgba(255,255,255,.82);--ks-glow:rgba(139,92,246,.16);--ks-glow2:rgba(217,70,239,.08);color-scheme:light}
 :root{--bg:var(--ks-bg);--t:var(--ks-tx);--tx:var(--ks-tx);--mute:var(--ks-mu);--mu:var(--ks-mu);--card:var(--ks-card);--card2:var(--ks-card2);--line:var(--ks-line)}
 html,body{background:var(--ks-bg)!important;color:var(--ks-tx)}
 body{transition:background .3s,color .3s}
@@ -197,6 +197,17 @@ html[data-theme=light] .kl-go{color:#7c3aed}
 .kl-msg a{color:#fff;background:#e11d48;padding:9px 16px;border-radius:999px;text-decoration:none}
 @media (max-width:980px){.kl-grid{grid-template-columns:repeat(2,1fr)}.kl-band{grid-template-columns:1fr 1fr}.kl-band>div:first-child{grid-column:1/-1}}
 @media (max-width:520px){.kl-grid{grid-template-columns:1fr}.kl-cover{height:104px}}
+/* ธีมสว่าง: พื้นไม่จ้า + ช่องสีดำเด่นๆ */
+html[data-theme=light] .ksnav .bar{background:rgba(18,15,26,.92);border-color:rgba(0,0,0,.4)}
+html[data-theme=light] .ksnav .lg{color:#fff}
+html[data-theme=light] .ksnav .pills{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+html[data-theme=light] .ksnav .pl{color:#bdb6d6}
+html[data-theme=light] .ksnav .pl:hover,html[data-theme=light] .ksnav .pl.on{color:#fff;background:rgba(255,255,255,.1)}
+html[data-theme=light] .ksnav .tg{color:#fff;border-color:rgba(255,255,255,.16)}
+html[data-theme=light] .ksnav .live{background:rgba(255,255,255,.08)!important;color:#d6d0ea;border-color:rgba(255,255,255,.14)}
+html[data-theme=light] .kl-band{background:#15121e;color:#fff;border-color:#000}
+html[data-theme=light] .kl-band small,html[data-theme=light] .kl-n span{color:#b4adc9}
+html[data-theme=light] .kl-ic,html[data-theme=light] .f .ic{background:#15121e!important;border-color:#000}
 /* ===== /KS KIT ===== */
 </style><!--/KS:CSS-->
 </head>
@@ -355,7 +366,7 @@ fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/releases?per_page=30`).
         const o = by.get(m.u); if (!o || m.ts >= o.ts) by.set(m.u, m);
       }
       const now = Date.now();
-      list = [...by.values()].filter(m => !m.off && now - m.ts < 200e3 && (HOST.test(m.flv || '') || HOST.test(m.hls || ''))).map(m => ({ u: m.u, n: String(m.n || m.u).slice(0, 40), a: HOST.test(m.a || '') ? m.a : '', cv: HOST.test(m.cv || '') ? m.cv : '', t: String(m.t || '').slice(0, 80), vc: +m.vc || 0, o: m.o === 'h' ? 'h' : 'v', flv: HOST.test(m.flv || '') ? m.flv : '', hls: HOST.test(m.hls || '') ? m.hls : '' })).sort((a, b) => b.vc - a.vc);
+      list = [...by.values()].filter(m => !m.off && now - m.ts < 200e3).map(m => ({ u: m.u, n: String(m.n || m.u).slice(0, 40), a: HOST.test(m.a || '') ? m.a : '', cv: HOST.test(m.cv || '') ? m.cv : '', t: String(m.t || '').slice(0, 80), vc: +m.vc || 0, o: m.o === 'h' ? 'h' : 'v', flv: HOST.test(m.flv || '') ? m.flv : '', hls: HOST.test(m.hls || '') ? m.hls : '' })).sort((a, b) => b.vc - a.vc);
       draw(true);
     } catch (e) { draw(false); }
   }
@@ -383,8 +394,9 @@ fetch(`https://api.github.com/repos/${C.owner}/${C.repo}/releases?per_page=30`).
     mbg.innerHTML = `<div class="kl-mod"><div class="kl-mh">${av(m, 'kl-av')}<div style="flex:1;min-width:0"><div class="kl-nm">${esc(m.n)}</div><div class="kl-us">@${esc(m.u)} · 👀 ${fmt(m.vc)} คนดู</div></div><a class="kl-tt" href="${tk}" target="_blank" rel="noopener">🎵 เปิดใน TikTok</a><button class="x2" aria-label="ปิด">✕</button></div><div class="kl-fr ${m.o}"><video playsinline controls autoplay></video><div class="kl-badge"><i></i>LIVE</div><div class="kl-msg"><div class="kl-spin"></div><span>กำลังเปิดไลฟ์…</span></div></div></div>`;
     mbg.classList.add('on'); document.body.style.overflow = 'hidden';
     const v = mbg.querySelector('video'), msg = mbg.querySelector('.kl-msg');
-    const fail = () => { if (curM !== m) return; stop(); msg.innerHTML = `<b>เปิดภาพไลฟ์บนเว็บไม่ได้</b><span>ไลฟ์อาจเพิ่งจบ หรือ TikTok ไม่ให้เปิดนอกแอป</span><a href="${tk}" target="_blank" rel="noopener">🎵 ดูไลฟ์นี้ใน TikTok</a>`; msg.style.display = 'flex'; };
+    const fail = () => { if (curM !== m) return; stop(); msg.innerHTML = `<b>ไลฟ์นี้ดูบนเว็บนี้ไม่ได้</b><span>TikTok ไม่ให้เปิดภาพไลฟ์นอก TikTok — กดปุ่มด้านล่างเพื่อดูไลฟ์นี้ได้เลย</span><a href="${tk}" target="_blank" rel="noopener">🎵 ดูไลฟ์นี้ใน TikTok</a>`; msg.style.display = 'flex'; };
     v.addEventListener('playing', () => { msg.style.display = 'none'; });
+    if (!m.flv && !m.hls) return fail();
     const viaHls = async () => { try { const H = await lib('Hls'); if (curM !== m) return; if (!m.hls || !H.isSupported()) return fail(); stop(); hl = new H({ lowLatencyMode: true }); hl.loadSource(m.hls); hl.attachMedia(v); hl.on(H.Events.MANIFEST_PARSED, () => v.play().catch(() => {})); hl.on(H.Events.ERROR, (_e, d) => { if (d && d.fatal) fail(); }); } catch (e) { fail(); } };
     try {
       if (!m.flv) return viaHls();
